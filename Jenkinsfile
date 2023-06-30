@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        function_name = 'aws-1-pepiline'
+        function_name = 'sonarlambda'
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
         stages {
           stage("SonarQube analysis") {
             steps {
-              withSonarQubeEnv('bathiniarun') {
+              withSonarQubeEnv('sonar') {
                 sh 'mvn clean package sonar:sonar'
               }
             }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Push'
 
-                sh "aws s3 cp target/sample-1.0.3.jar s3://redbull-f1"
+                sh "aws s3 cp target/sample-1.0.3.jar s3://sonartest12"
             }
         }
 
